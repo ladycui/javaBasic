@@ -57,7 +57,7 @@ public class CompletableFutureDemo {
          * applyToEither( , Function<T,U>) | acceptEither( , Consumer<U>) | runAfterEither( , Runnable)
          *
          * and聚合可以多个聚合，但or聚合是二选一；若需要多选一，可以考虑组装，例如1，2，3，4，这样：（1，2）either和（3，4）either之后再either，只是一个思路，方案后面再想下更好的
-         *
+         *  补充：后面专栏中有这么个思路（用CompletionService实现Dubbo中Forking Cluster）：创建一个阻塞队列，线程池异步启动4个任务，将future入队；从队列中take元素，若非空，则其他future.cancel
          */
         CompletableFuture<String> f7 = CompletableFuture.supplyAsync(() -> {
             System.out.println("T7 is running");
