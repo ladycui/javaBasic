@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public class CyclicBarrierDemo {
     static int continueFlag = 0;
 
-    static AtomicInteger i = new AtomicInteger(0);
+//    static AtomicInteger i = new AtomicInteger(0);
 
     static Queue<Integer> queue1 = new LinkedBlockingDeque<>(10);
     static Queue<Integer> queue2 = new LinkedBlockingDeque<>(10);
@@ -26,8 +26,9 @@ public class CyclicBarrierDemo {
         Thread task2 = new Thread(new Task2(barrier, continueFlag, queue2));
         task1.start();
         task2.start();
-        i.getAndIncrement();
-        System.out.println(((ThreadPoolExecutor)executor).getMaximumPoolSize());//查看线程池状态
+//        i.getAndIncrement();
+        System.out.println(((ThreadPoolExecutor) executor).getMaximumPoolSize());//查看线程池状态
+        System.out.println(barrier.getNumberWaiting());
     }
 
     static void task3() {

@@ -22,14 +22,14 @@ public class Task2 implements Runnable {
 
     @Override
     public void run() {
-        while(continueFlag++ < 10) {
+        while (continueFlag++ < 10) {
             queue.add(continueFlag);
             System.out.println("Task2 is running, flag = " + continueFlag);
-            try {
-                barrier.await();
-            } catch (InterruptedException | BrokenBarrierException e) {
-                e.printStackTrace();
-            }
+        }
+        try {
+            barrier.await();
+        } catch (InterruptedException | BrokenBarrierException e) {
+            e.printStackTrace();
         }
     }
 }

@@ -25,11 +25,11 @@ public class Task1 implements Runnable {
         while (continueFlag++ < 10) {
             System.out.println("Task1 is running, flag1 = " + continueFlag);
             queue.add(continueFlag);
-            try {
-                barrier.await();
-            } catch (InterruptedException | BrokenBarrierException e) {
-                e.printStackTrace();
-            }
+        }
+        try {
+            barrier.await();
+        } catch (InterruptedException | BrokenBarrierException e) {
+            e.printStackTrace();
         }
     }
 }
