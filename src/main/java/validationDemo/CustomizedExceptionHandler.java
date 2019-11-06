@@ -16,7 +16,7 @@ import java.util.Set;
  * @Description: 对controller中抛出的特定异常进行处理，e.g. 抛出ValidationException，返回bad request并能知道异常信息
  */
 @RestControllerAdvice
-public class ExceptionHanlder {
+public class CustomizedExceptionHandler {
 
     @ExceptionHandler(ValidationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)

@@ -5,17 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.ValidationException;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import java.util.List;
 
 /**
@@ -49,9 +43,10 @@ public class TestController {
 
 
     @GetMapping("/test/get2")
-    public String testGet(@NotBlank(message = "name is blank") String name, @Min(value = 100) Integer age) {
+    public Result testGet(@NotBlank(message = "name is blank") @Pattern(regexp = "[\\w.]+", message = "name format is wrong") String name,// \w = [_a-zA-Z0-9]
+                          @NotNull @Min(value = 100) Integer age) {
         log.info("testGet name: {}, age: {}", name, age);
-        return name;
+        return new Result();
     }
 
 
