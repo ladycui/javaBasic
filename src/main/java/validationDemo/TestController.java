@@ -33,7 +33,9 @@ public class TestController {
      * 2. 若有异常，会抛出ConstraintViolationException；
      * 统一异常捕获，使用@ControllerAdvice（@RestControllerAdvice）注解的类处理异常，详见ExceptionHandler类
      * 3. 默认的校验注解（@NotNull等）会抛出异常，exceptionHandler可以捕获异常并返回定制化异常信息，而不是返回默认的异常信息；
-     * 注：@Valid或@Validation不会抛出异常，所以bean校验要自己抛出异常。
+     *    注：@Valid或@Validation不会抛出异常。
+     * 4. 递归验证，即验证对象中对象属性，e.g. 验证User中Person属性，在Person中添加@Valid，参加6.5th函数；
+     *    若验证List，参见7th函数
      */
     @GetMapping("/test/get")
     public String testGet(@NotNull String name) {
@@ -81,6 +83,34 @@ public class TestController {
         validateInput(bindingResult);
         return JSONObject.toJSONString(input);
     }
+
+    /**
+     * 递归验证对象中对象属性，在对象中对象前添加@Valid
+     * @param user
+     * @param bindingResult
+     * @return
+     */
+    @PostMapping("/test/recursive2")
+    public String testGet6_5(@RequestBody @Valid User2 user, BindingResult bindingResult) {
+        log.info("/test/recursive, input: {}", JSONObject.toJSONString(user));
+        validateInput(bindingResult);
+        return JSONObject.toJSONString(user);
+    }
+
+    /**
+     * 递归验证 对象中对象的属性， 例：User中Person对象里的属性。
+     * @param user
+     * @param bindingResult
+     * @return
+     */
+    @PostMapping("/test/recursive")
+    public String testGet7(@RequestBody @Valid User user, BindingResult bindingResult) {
+        log.info("/test/recursive, input: {}", JSONObject.toJSONString(user));
+        validateInput(bindingResult);
+        return JSONObject.toJSONString(user);
+    }
+
+
 
     private void validateInput(BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {

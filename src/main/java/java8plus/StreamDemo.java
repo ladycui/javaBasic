@@ -6,7 +6,7 @@ import java.util.stream.Stream;
 /**
  * @Auther: cyn
  * @Date: 2019-11-21 10:01
- * @Description:
+ * @Description: reference: https://www.ibm.com/developerworks/cn/java/j-lo-java8streamapi/
  */
 public class StreamDemo {
 
@@ -18,12 +18,12 @@ public class StreamDemo {
 //            return i + j;
 //        }).get();
 //        System.out.println(result);
-//        Integer reduceFromIdentity = Stream.of(1, 2, 3, 4, 5).reduce(2, (i, j) -> {
-//            System.out.println("i:\t" + i);
-//            System.out.println("j:\t" + j);
-//            return i + j;
-//        });
-//        System.out.println(reduceFromIdentity);
+        Integer reduceFromIdentity = Stream.of(1, 2, 3, 4, 5).reduce(2, (i, j) -> {
+            System.out.println("i:\t" + i);
+            System.out.println("j:\t" + j);
+            return i + j;
+        });
+        System.out.println(reduceFromIdentity);
 
         Stream.of(1, 2, 3, 4, 4, 5)
                 .filter(i -> i % 2 == 0)
