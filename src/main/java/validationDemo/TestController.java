@@ -29,9 +29,9 @@ public class TestController {
 
     /**
      * 1. 单个参数校验，要在类上加上Spring的@Validated注解；
-     * 若bean的话，只需在bean前@Valid or @Validated即可。
+     *      若bean的话，只需在bean前@Valid or @Validated即可。
      * 2. 若有异常，会抛出ConstraintViolationException；
-     * 统一异常捕获，使用@ControllerAdvice（@RestControllerAdvice）注解的类处理异常，详见ExceptionHandler类
+     *      统一异常捕获，使用@ControllerAdvice（@RestControllerAdvice）注解的类处理异常，详见ExceptionHandler类
      * 3. 默认的校验注解（@NotNull等）会抛出异常，exceptionHandler可以捕获异常并返回定制化异常信息，而不是返回默认的异常信息；
      *    注：@Valid或@Validation不会抛出异常。
      * 4. 递归验证，即验证对象中对象属性，e.g. 验证User中Person属性，在Person中添加@Valid，参加6.5th函数；
