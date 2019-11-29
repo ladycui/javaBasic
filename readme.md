@@ -14,6 +14,7 @@
     2. exception handler
     3. fast fail
     4. group
+    5. enum
 
 #### note
 1. 对于简单的并行任务，你可以通过<b>“线程池 +Future”</b>的方案来解决；
