@@ -21,21 +21,22 @@ import java.util.List;
  * 2. bean校验；
  * 3. 处理异常（处理类exceptionHandler有@ControllerAdvice）；
  * 4. 配置validator，failFast机制
+ * 5. 自定义注解验证枚举类，用String类型接受入参。见例6中Person中Sex。
  */
 @RestController
 @Slf4j
-@Validated
+@Validated//此处需用@Validated
 public class TestController {
 
     /**
      * 1. 单个参数校验，要在类上加上Spring的@Validated注解；
-     *      若bean的话，只需在bean前@Valid or @Validated即可。
+     * 若bean的话，只需在bean前@Valid or @Validated即可。
      * 2. 若有异常，会抛出ConstraintViolationException；
-     *      统一异常捕获，使用@ControllerAdvice（@RestControllerAdvice）注解的类处理异常，详见ExceptionHandler类
+     * 统一异常捕获，使用@ControllerAdvice（@RestControllerAdvice）注解的类处理异常，详见ExceptionHandler类
      * 3. 默认的校验注解（@NotNull等）会抛出异常，exceptionHandler可以捕获异常并返回定制化异常信息，而不是返回默认的异常信息；
-     *    注：@Valid或@Validation不会抛出异常。
+     * 注：@Valid或@Validation不会抛出异常。
      * 4. 递归验证，即验证对象中对象属性，e.g. 验证User中Person属性，在Person中添加@Valid，参加6.5th函数；
-     *    若验证List，参见7th函数
+     * 若验证List，参见7th函数
      */
     @GetMapping("/test/get")
     public String testGet(@NotNull String name) {
@@ -86,6 +87,7 @@ public class TestController {
 
     /**
      * 递归验证对象中对象属性，在对象中对象前添加@Valid
+     *
      * @param user
      * @param bindingResult
      * @return
@@ -99,6 +101,7 @@ public class TestController {
 
     /**
      * 递归验证 对象中对象的属性， 例：User中Person对象里的属性。
+     *
      * @param user
      * @param bindingResult
      * @return
@@ -109,7 +112,6 @@ public class TestController {
         validateInput(bindingResult);
         return JSONObject.toJSONString(user);
     }
-
 
 
     private void validateInput(BindingResult bindingResult) {
