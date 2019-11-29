@@ -1,5 +1,6 @@
 package validationDemo;
 
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -33,11 +34,5 @@ public class CustomizedExceptionHandler {
         return exception.getMessage();
     }
 
-//    @ExceptionHandler(IllegalStateException.class)
-//    @ResponseStatus(HttpStatus.BAD_REQUEST)
-//    public String handleIllegalState(IllegalStateException exception) {
-//        System.out.println(exception.getMessage());
-//        return exception.getMessage();
-//    }
 
 }
