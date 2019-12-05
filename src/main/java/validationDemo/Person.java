@@ -28,6 +28,13 @@ public class Person {
     @Max(value = 20, message = "age 不能大于20")
     Integer age;
     /**
+     * 测试发现 NotNull 对boolean不生效，不传时默认为false
+     *                  但对Boolean 正常作用;
+     *  同理，对基本数据类型，不传的话，为默认值；用封装类正常校验
+     */
+    @NotNull(message = "isChinese 不能为空")
+    Boolean isChinese;
+    /**
      * 自定义注解验证枚举类型
      * 枚举传参类型为String
      */
