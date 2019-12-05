@@ -22,6 +22,7 @@ import java.util.List;
  * 3. 处理异常（处理类exceptionHandler有@ControllerAdvice）；
  * 4. 配置validator，failFast机制
  * 5. 自定义注解验证枚举类，用String类型接受入参。见例6中Person中Sex。
+ * 6. @NotNull对基本数据类型不起作用（不传时为默认值），但对封装类正常校验
  */
 @RestController
 @Slf4j
