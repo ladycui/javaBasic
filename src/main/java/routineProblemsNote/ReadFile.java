@@ -13,8 +13,7 @@ import java.util.Set;
 /**
  * @Auther: cyn
  * @Date: 2019-11-26 17:38
- * @Description:
- * 1. 常用的三种读文件用法，推荐使用Buffered；
+ * @Description: 1. 常用的三种读文件用法，推荐使用Buffered；
  * 2. 遍历JSONArray的食用方式；
  */
 @Slf4j
@@ -23,19 +22,24 @@ public class ReadFile {
 ///Users/cyn/practiceCode/javaBasic/src/main/java/routineProblemsNote/ReadFile.java
 
     public static void main(String[] args) {
-        String content = readFileWithBuffer("/Users/cyn/practiceCode/javaBasic/src/main/resources/domainstatus.json");
+        String content = readFileWithBuffer("/Users/cyn/practiceCode/javaBasic/src/main/resources/responseData.json");
 
-        Set<String> domains = new HashSet<>();
-        JSONObject body = JSONObject.parseObject(content);
-
-        //遍历JSONArray以后用这种方式
-        final List<JSONObject> list = body.getObject("data", List.class);
-        for (JSONObject ele : list) {
-            domains.add(ele.getString("channel_id"));
-        }
-        System.out.println(list.size());
-        System.out.println(domains.size());
-
+        JSONObject contentObj = JSONObject.parseObject(content);
+        JSONObject body = contentObj.getJSONObject("body");
+        JSONObject data = body.getJSONObject("data");
+        List<JSONObject> origin_configs = body.getObject("origin_configs", List.class);
+        System.out.println(JSONObject.toJSONString(data));
+        System.out.println(JSONObject.toJSONString(origin_configs));
+//
+//        Set<String> domains = new HashSet<>();
+//
+//        //遍历JSONArray以后用这种方式
+//        final List<JSONObject> list = body.getObject("data", List.class);
+//        for (JSONObject ele : list) {
+//            domains.add(ele.getString("channel_id"));
+//        }
+//        System.out.println(list.size());
+//        System.out.println(domains.size());
 
 
     }
