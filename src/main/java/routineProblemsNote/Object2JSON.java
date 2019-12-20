@@ -2,6 +2,7 @@ package routineProblemsNote;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import routineProblemsNote.entity.Source;
 
 /**
  * @Auther: cyn
@@ -14,6 +15,7 @@ public class Object2JSON {
         source.setAddr("1.1.1.1");
         source.setPort(80);
         source.setWeight(1);
+        System.out.println(source.toString());
 
         JSONObject jsonObject = (JSONObject) JSON.toJSON(source);
 

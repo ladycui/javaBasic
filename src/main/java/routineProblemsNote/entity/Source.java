@@ -1,4 +1,4 @@
-package routineProblemsNote;
+package routineProblemsNote.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
