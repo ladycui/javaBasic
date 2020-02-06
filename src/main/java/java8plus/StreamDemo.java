@@ -1,5 +1,8 @@
 package java8plus;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -33,5 +36,62 @@ public class StreamDemo {
 
 
     }
+
+
+    public void testStreamLimit() {
+//        List<Person> people = Arrays.asList(new Person("one", 4),
+//                new Person("two", 2), new Person("three", 3), new Person("one", 1));
+//        List<Person> lessThan4 = people.stream().filter(p -> p.age <= 4)
+//                .limit(3).collect(Collectors.toList());
+//        lessThan4.stream().forEach(p -> System.out.println(p));
+        String[] words = {"hello", "world"};
+        List<String> wordsList = Arrays.asList(words);
+//        List<String[]> collect = wordsList.stream().
+//                map(w -> w.split(""))
+//                .distinct()
+//                .collect(Collectors.toList());
+//        Stream<String> streamWords = Arrays.stream(words);
+        List<Stream<String>> collect = wordsList.stream()
+                .map(w -> w.split(""))
+                .map(Arrays::stream)
+                .distinct()
+                .collect(Collectors.toList());
+        /**
+         * map(Arrays::stream): Stream<String[]> --> Stream<Stream<String>>
+         * flatMap(Arrays::stream): 将map(Arrays::stream)生成的流合并为一个流
+         *                      Stream<String[]> --> Stream<Stream<String>> --> Stream<String>
+         */
+        List<String> collectFlat = wordsList.stream()
+                .map(w -> w.split(""))
+                .flatMap(Arrays::stream)
+                .distinct()
+                .collect(Collectors.toList());
+
+        List<Integer> numbers1 = Arrays.asList(1, 2, 3);
+        List<Integer> numbers2 = Arrays.asList(3, 4);
+        List<Stream<int[]>> pairs = numbers1.stream()//Stream<Integer>
+//        Stream<int[]> stream2 = numbers2.stream().map(j -> new int[]{1, j});
+                .map(i -> numbers2.stream().map(j -> new int[]{i, j}))//Stream<Stream<int[]>>
+                .collect(Collectors.toList());//List<Stream<int[]>>
+
+        List<int[]> correctPairs = numbers1.stream()
+                .flatMap((i -> numbers2.stream().map(j -> new int[]{i, j}))) // Stream<int[]> -> int[]
+                .collect(Collectors.toList());
+
+        List<int[]> correctPairs3 = numbers1.stream()
+                .flatMap((i -> numbers2.stream().filter(j -> i + j % 3 == 0).map(j -> new int[]{i, j}))) // Stream<int[]> -> int[]
+                .collect(Collectors.toList());
+
+        int sum = numbers1.stream().reduce(0, (a, b) -> a + b);
+        int sum2 = numbers1.stream().reduce(0, Integer::sum);
+        Optional<Integer> reduceSum = numbers1.stream().reduce((a, b) -> a + b);
+        reduceSum.ifPresent(s -> System.out.println(s));
+
+        Optional<Integer> max = numbers1.stream().reduce((a, b) -> Integer.max(a, b));
+        max.ifPresent(m -> System.out.println(m));
+        Optional<Integer> max2 = numbers1.stream().reduce(Integer::max);
+
+    }
+
 
 }
