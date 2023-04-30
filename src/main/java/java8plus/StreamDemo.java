@@ -1,5 +1,6 @@
 package java8plus;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -21,20 +22,37 @@ public class StreamDemo {
 //            return i + j;
 //        }).get();
 //        System.out.println(result);
-        Integer reduceFromIdentity = Stream.of(1, 2, 3, 4, 5).reduce(2, (i, j) -> {
-            System.out.println("i:\t" + i);
-            System.out.println("j:\t" + j);
-            return i + j;
-        });
-        System.out.println(reduceFromIdentity);
+//        Integer reduceFromIdentity = Stream.of(1, 2, 3, 4, 5).reduce(2, (i, j) -> {
+//            System.out.println("i:\t" + i);
+//            System.out.println("j:\t" + j);
+//            return i + j;
+//        });
+//        System.out.println(reduceFromIdentity);
+//
+//        Stream.of(1, 2, 3, 4, 4, 5)
+//                .filter(i -> i % 2 == 0)
+//                .map(i -> i * i)
+//                .distinct()
+//                .collect(Collectors.toList()).forEach(System.out::println);
 
-        Stream.of(1, 2, 3, 4, 4, 5)
-                .filter(i -> i % 2 == 0)
-                .map(i -> i * i)
-                .distinct()
-                .collect(Collectors.toList()).forEach(System.out::println);
+        String[] words = {"a", "abcd", "abc", "ab", "bc"};
+//        Arrays.sort(words, (a, b) -> Integer.compare(a.length(), b.length()));
+        Arrays.asList(words).sort((a, b) -> Integer.compare(a.length(), b.length()));
+        List<String> sorted = Arrays.stream(words).sorted((a, b) -> a.length() - b.length()).collect(Collectors.toList());
+        System.out.println(sorted);
+        System.out.println(Arrays.asList(words));
 
+        int[] nums = {2, 5, 6, 1, 3, 7};
+        Arrays.asList(nums);// 基本数据类型 的结果为 List<int[]> 而非 List<Integer>
+        //int[] -> List<Integer>
+        List<Integer> integerList = Arrays.stream(nums).boxed().collect(Collectors.toList());
+        //List<Integer> -> int[]
+        int[] ints = integerList.stream().mapToInt(Integer::valueOf).toArray();
+        //List<Integer> -> Integer[]
+        Integer[] integers = integerList.toArray(new Integer[0]);
 
+        int[] filterArray = Arrays.stream(nums).filter(e -> e > 5).toArray();
+        System.out.println(Arrays.toString(filterArray));
     }
 
 
