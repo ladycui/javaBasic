@@ -11,6 +11,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * @Description: Task1 与 Task2 都独立完成任务后，触发另一任务 //配合 极客时间-JAVA并发编程实战19th
  * usage of CyclicBarrier
  */
+@Deprecated
 public class CyclicBarrierDemo {
     static int continueFlag = 0;
 
