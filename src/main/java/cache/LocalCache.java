@@ -6,6 +6,10 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+/**
+ *  this implementation versus ConcurrentHashMap
+ *  this one has better performance
+ */
 class LocalCache<K, V> {
     final Map<K, V> m = new HashMap<>();
     final ReadWriteLock rwl = new ReentrantReadWriteLock();

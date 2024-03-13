@@ -1,10 +1,10 @@
 package java8plus;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
@@ -53,10 +53,12 @@ public class StreamDemo {
 
         int[] filterArray = Arrays.stream(nums).filter(e -> e > 5).toArray();
         System.out.println(Arrays.toString(filterArray));
+
+        testStreamLimit();
     }
 
 
-    public void testStreamLimit() {
+    public static void testStreamLimit() {
 //        List<Person> people = Arrays.asList(new Person("one", 4),
 //                new Person("two", 2), new Person("three", 3), new Person("one", 1));
 //        List<Person> lessThan4 = people.stream().filter(p -> p.age <= 4)
@@ -107,7 +109,7 @@ public class StreamDemo {
 
         Optional<Integer> max = numbers1.stream().reduce((a, b) -> Integer.max(a, b));
         max.ifPresent(m -> System.out.println(m));
-        Optional<Integer> max2 = numbers1.stream().reduce(Integer::max);
+//        Optional<Integer> max2 = numbers1.stream().reduce(Integer::max);
 
     }
 

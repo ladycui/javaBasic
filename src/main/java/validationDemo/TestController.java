@@ -41,14 +41,14 @@ public class TestController {
      * 5. 枚举类型的验证
      *  自定义注解验证枚举类型，枚举传参类型String，见例6的Person中Sex。
      */
-    @GetMapping("/test/get")
+    @GetMapping("/toDelete/get")
     public String testGet(@NotNull String name) {
         log.info("testGet name: {}", name);
         return name;
     }
 
 
-    @GetMapping("/test/get2")
+    @GetMapping("/toDelete/get2")
     public Result testGet(@NotBlank(message = "name is blank") @Pattern(regexp = "[\\w.]+", message = "name format is wrong") String name,// \w = [_a-zA-Z0-9]
                           @NotNull @Min(value = 100) Integer age) {
         log.info("testGet name: {}, age: {}", name, age);
@@ -56,7 +56,7 @@ public class TestController {
     }
 
 
-    @GetMapping("/test/get4")
+    @GetMapping("/toDelete/get4")
     public String testGet4(@NotEmpty String name) {
         log.info("testGet4 name: {}", name);
         return name;
@@ -65,9 +65,9 @@ public class TestController {
     /**
      * 此时返回数据格式是默认格式（很长很难看），推荐使用下面6的定制化返回异常信息。
      */
-    @PostMapping("/test/get5")
+    @PostMapping("/toDelete/get5")
     public String testGet5(@RequestBody @Valid Person input) {
-        log.info("/test/get5, input: {}", JSONObject.toJSONString(input));
+        log.info("/toDelete/get5, input: {}", JSONObject.toJSONString(input));
         return JSONObject.toJSONString(input);
     }
 
@@ -81,9 +81,9 @@ public class TestController {
      * @param bindingResult
      * @return
      */
-    @PostMapping("/test/get6")
+    @PostMapping("/toDelete/get6")
     public String testGet6(@RequestBody @Validated Person input, BindingResult bindingResult) {//此处@Valid和@validated无差别
-        log.info("/test/get6, input: {}", JSONObject.toJSONString(input));
+        log.info("/toDelete/get6, input: {}", JSONObject.toJSONString(input));
         validateInput(bindingResult);
         return JSONObject.toJSONString(input);
     }
@@ -95,9 +95,9 @@ public class TestController {
      * @param bindingResult
      * @return
      */
-    @PostMapping("/test/recursive2")
+    @PostMapping("/toDelete/recursive2")
     public String testGet6_5(@RequestBody @Valid User2 user, BindingResult bindingResult) {
-        log.info("/test/recursive, input: {}", JSONObject.toJSONString(user));
+        log.info("/toDelete/recursive, input: {}", JSONObject.toJSONString(user));
         validateInput(bindingResult);
         return JSONObject.toJSONString(user);
     }
@@ -109,9 +109,9 @@ public class TestController {
      * @param bindingResult
      * @return
      */
-    @PostMapping("/test/recursive")
+    @PostMapping("/toDelete/recursive")
     public String testGet7(@RequestBody @Valid User user, BindingResult bindingResult) {
-        log.info("/test/recursive, input: {}", JSONObject.toJSONString(user));
+        log.info("/toDelete/recursive, input: {}", JSONObject.toJSONString(user));
         validateInput(bindingResult);
         return JSONObject.toJSONString(user);
     }

@@ -30,7 +30,7 @@ public class ThreadPoolDemo {
             threadPool.execute(() -> System.out.println(Thread.currentThread().getName() + "running task "));
         }
 
-        Future result = (threadPool).submit(() -> 10);//accept a callable
+        Future result = threadPool.submit(() -> 10);//accept a callable
         try {
             System.out.println(result.get());
         } catch (InterruptedException | ExecutionException e) {
