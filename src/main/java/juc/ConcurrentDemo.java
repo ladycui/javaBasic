@@ -3,12 +3,15 @@ package juc;
 import org.springframework.util.StopWatch;
 
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.LongAdder;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * demo of ConcurrentHashMap & LongAdder
- *  freqs.computeIfAbsent("b", k -> new LongAdder()).increment();
+ * freqs.computeIfAbsent("b", k -> new LongAdder()).increment();
  * stopwatch in this demo has no meaning, just a demo showing the usage of StopWatch
  */
 public class ConcurrentDemo {
@@ -37,16 +40,20 @@ public class ConcurrentDemo {
         watch.stop();
         System.out.println(watch.prettyPrint());
 
-//        for (int i = 0; i < 1000; i++) {
-//                freqs.computeIfAbsent("d", k -> new LongAdder()).increment();
-//        }
-//        System.out.println(freqs.get("d"));
 
         for (int i = 0; i < 1000; i++) {
             new Thread(() -> {
-                freqs.computeIfAbsent("c", k -> new LongAdder()).increment();
+                freqs.computeIfAbsent("c", k -> new LongAdder()).increment();// the type of value is LongAdder instead of long
             }).start();
         }
+        ForkJoinPool forkJoinPool = new ForkJoinPool(10);
+        forkJoinPool.execute(() -> IntStream.rangeClosed(1, 1000).parallel().forEach(i -> freqs.computeIfAbsent("d", k -> new LongAdder()).increment()));
+        forkJoinPool.shutdown();
+        forkJoinPool.awaitTermination(1, TimeUnit.HOURS);
+
+        //convert value type LongAdder to long
+        freqs.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue().longValue()));
+
         TimeUnit.SECONDS.sleep(1);
         System.out.println(freqs.get("c"));
     }
